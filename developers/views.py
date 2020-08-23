@@ -66,16 +66,13 @@ class ProjectUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 		if self.request.user == project.user_name:
 			return True
 		return False
-
-class ProjectDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-	model = Project
-	success_url = 'my-projects/'
-
-	def test_func(self):
-		project = self.get_object()
-		if self.request.user == project.user_name:
-			return True
-		return False
+@login_required
+@developer_required
+def project_delete(request, pk):
+	project = Project.objects.get(pk=pk)
+	if request.user== project.user_name:
+		Project.objects.get(pk=pk).delete()
+	return redirect('my_projects')
 
 @login_required
 @developer_required
