@@ -1,0 +1,33 @@
+{% extends "users/layout.html" %}
+{% load static %}
+{% block cssfiles %}
+{% endblock cssfiles %}
+{% block content %}
+<div class="container">
+	    <div class="row">
+	      <div class="col-md-12">
+	        <div class="card card-signin my-5">
+	          <div class="card-body">
+	          	<h4 class="text-dark"><b>{{ project.title }}</b></h4>
+	          	<small class="text-muted">Posted by <a href="{{ project.user_name.developer.get_absolute_url }}">{{ project.user_name }}</a> on {{ project.date_posted }}</small>
+	          	<br><br>
+	            <p class="card-text text-dark" style="white-space: pre-wrap; font-family: sans-serif; font-size: 16px">{{ project.description }}</p>
+	          </div>
+	          {% if project.tags %}
+	          <p class="text-danger ml-3"><b>Tags: <i>{{ project.tags }}</i></b></p>
+	          {% endif %}
+	          <div class="card-footer">
+	          	{% if project.link %}
+	          	<a class="btn btn-primary" href="{{ project.link }}">View the Project Source</a>
+	          	{% endif %}
+	          	{% if user == project.user_name %}
+	          	<a class="btn btn-warning" href="{% url 'project-update' project.id %}">Update Project</a>
+	          	<a class="btn btn-danger" href="{% url 'project-delete' project.id %}">Remove Project</a>
+	          	{% endif %}
+	          </div>
+	        </div>
+	  	   </div>
+	    </div>
+	</div>
+{% endblock content %}
+{% block jsfiles %}{% endblock jsfiles %}

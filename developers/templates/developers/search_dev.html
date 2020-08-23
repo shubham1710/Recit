@@ -1,0 +1,35 @@
+{% extends "users/layout.html" %}
+{% load static %}
+{% block cssfiles %}
+{% endblock cssfiles %}
+{% block content %}
+<div class="container">
+	<div class="row">
+	    <div class="col-md-8">
+	    	{% for d,c in objects %}
+	        <div class="card card-signin my-4">
+	          <div class="card-body">
+	          	<a href="{{ d.user.developer.get_absolute_url }}"><img src="{{ d.user.developer.image.url }}" class="rounded-circle" width="40" height="40" alt=""></a>
+	          	<a class="text-dark" href="{{ d.user.developer.get_absolute_url }}"><b>{{ d.user }}</b></a>
+	          </div>
+	          <div class="card-footer">
+	          	<span style="color: green"><b>{{ c }} of {{ skills.count }} skills match!</b></span>
+	          </div>
+	        </div>
+	        {% endfor %}
+	  	</div>
+	  	<div class="col-md-4">
+			<div class="card card-signin my-5">
+		        <div class="card-body">
+		            <h5 class="card-title text-center"><b>Required Skills ({{ skills.count }})</b></h5>
+		            {% for skill in skills %}
+		            <div>
+		            	<li>{{ skill.skill_req }}</li>
+		            </div>
+		            {% endfor %}
+		    	</div>
+		    </div>
+		</div>
+</div>
+{% endblock content %}
+{% block jsfiles %}{% endblock jsfiles %}

@@ -1,0 +1,28 @@
+{% extends "users/layout.html" %}
+{% load static %}
+{% block cssfiles %}
+{% endblock cssfiles %}
+{% block content %}
+	<div class="container">
+	    <div class="row">
+	    {% for project in projects %}
+	      <div class="col-md-6">
+	        <div class="card card-signin my-5">
+	          <div class="card-body">
+	          	<h4><a class="text-dark" href="{% url 'project-detail' project.id %}"><b>{{ project.title }}</b></a></h4>
+	          	<small class="text-muted">Posted on {{ project.date_posted }}</small><br><br>
+	            <p class="card-text text-dark">{{ project.description|truncatewords:40 }}</p>
+	          </div>
+	          {% if project.tags %}
+	          <p class="text-danger ml-3"><b>Tags: <i>{{ project.tags }}</i></b></p>
+	          {% endif %}
+	          <div class="card-footer">
+	          	<a class="btn btn-primary" href="{% url 'project-detail' project.id %}">Read Complete Details</a>
+	          </div>
+	        </div>
+	  	   </div>
+	  	   {% endfor %}
+	    </div>
+	</div>
+{% endblock content %}
+{% block jsfiles %}{% endblock jsfiles %}

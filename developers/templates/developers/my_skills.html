@@ -1,0 +1,61 @@
+{% extends "users/layout.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block cssfiles %}
+{% endblock cssfiles %}
+{% block content %}
+<div class="container">
+    <div class="row">
+      	<div class="col-md-12">
+        	<div class="card card-signin my-5">
+          		<div class="card-body">
+            		<h5 class="card-title text-center"><b>Add Skills</b></h5>
+            		<form class="form-signin" method = "POST">
+            			{% csrf_token %}
+            			<fieldset class="form-group"><br>
+                			{{ form|crispy }}
+            			</fieldset>
+            			<div class="form-group">
+                			<button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Add Skill</button><br>
+            			</div>
+        			</form>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+    <div class="row">
+    	<div class="col-md-4">
+			<div class="card card-signin my-5">
+		        <div class="card-body">
+		            <h5 class="card-title text-center"><b>My Skills ({{ skills.count }})</b></h5>
+		            {% for skill in skills %}
+		            <div>
+		            	<li>{{ skill.skill_name }}</li>
+		            </div>
+		            {% endfor %}
+		    	</div>
+		    </div>
+		</div>
+		<div class="col-md-8">
+			<div class="card card-signin my-5">
+		        <div class="card-body">
+		            <h5 class="card-title text-center"><b>Delete Selected Skills</b></h5>
+		            <form class="form-signin" action="{% url 'skill-delete' %}" method="POST">
+		            	{% csrf_token %}
+			            {% for skill in skills %}
+			            <div>
+			            	<input class="mr-2"type="checkbox" value="{{ skill.id }}" name="choices">{{ skill.skill_name }}
+			            </div>
+			            {% endfor %}
+			            <br>
+			        <div class="form-group">
+                		<button class="btn btn-lg btn-danger btn-block text-uppercase" type="submit" name="delete">Delete Selected Skills</button><br>
+            		</div>
+            		</form>
+		    	</div>
+		    </div>
+		</div>
+	</div>
+</div>
+{% endblock content %}
+{% block jsfiles %}{% endblock jsfiles %}
