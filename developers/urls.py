@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from . import views
-from .views import ProjectUpdateView, ProjectDeleteView, DeveloperProjectListView
+from .views import ProjectUpdateView, DeveloperProjectListView
 
 urlpatterns = [
 	path('', views.home, name='home'),
@@ -10,7 +10,7 @@ urlpatterns = [
 	path('project/new', views.create_project, name='new_project'),
 	path('project/<int:pk>/', views.project_detail, name='project-detail'),
 	path('project/<int:pk>/update/', ProjectUpdateView.as_view(), name='project-update'),
-	path('project/<int:pk>/delete/', ProjectDeleteView.as_view(), name='project-delete'),
+	path('project/<int:pk>/delete/', views.project_delete, name='project-delete'),
 	path('skills/', views.my_skills, name='my_skills'),
 	path('delete_skills/', views.delete_skill, name='skill-delete'),
 	path('search_projects/', views.search_projects, name='search_projects'),
