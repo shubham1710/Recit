@@ -1,0 +1,81 @@
+{% extends "users/layout.html" %}
+{% load static %}
+{% block cssfiles %}
+{% endblock cssfiles %}
+{% block content %}
+
+	<div class="main-content">
+    <div class="container mt-7">
+      <div class="row">
+        <div class="col-xl-8 m-auto order-xl-2 mb-5 mb-xl-0">
+          <div class="card card-profile shadow">
+            <div class="row justify-content-center">
+              <div class="col-lg-3 order-lg-2">
+                <div class="card-profile-image">
+                  <a href="{{ u.recruiter.image.url }}">
+                    <img src="{{ u.recruiter.image.url }}" class="rounded-circle" width="160px" height="160px">
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+  
+            </div>
+            <div class="card-body pt-0 pt-md-4">
+              <div class="row">
+                <div class="col">
+                  <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                  </div>
+                </div>
+              </div>
+              <div class="text-center">
+                <h3>
+                  {% if u.recruiter.full_name %}
+                    {{ u.recruiter.full_name }}
+                  {% else %}
+                    {{ u }}
+                  {% endif %}
+              </h3>   
+                <p class="text-dark">{{ u.recruiter.company }}, {{ u.recruiter.country.name }}</p>
+                <p class="text-dark">{{u.recruiter.user.email}}</p>
+                <hr class="my-2">
+                {% if request.user == u %}
+                <a class="btn btn-warning" href="{% url 'rec_edit_profile' %}">Edit Profile</a>
+                {% endif %}
+                <a class="btn btn-success" href="mailto:{{ u.recruiter.user.email }}">Contact</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-8 m-auto order-xl-2 mb-5 mb-xl-0">
+          <div class="card card-signin my-5">
+            <div class="card-body">
+                <h2>Skill Requirements ({{ skills.count }})</h2>
+                <hr class="my-2">
+                {% for skill in skills %}
+                  {% if request.user.is_developer %}
+                    {% if skill.skill_req in skillset %}
+                    <li style="color: green"><b>{{ skill.skill_req }}</b></li>
+                    {% else %}
+                    <li style="color: red"><b>{{ skill.skill_req }}</b></li>
+                    {% endif %}
+                  {% else %}
+                  <li>{{ skill.skill_req }}</li>
+                  {% endif %}
+                {% endfor %}
+            </div>
+          </div>
+        </div>        
+      </div>
+      {% if request.user.is_developer %}
+       <small>* Skills matched are shown in green and not matched are shown in red.</small>
+       {% endif %}
+    </div>
+  </div>
+
+
+
+{% endblock content %}
+{% block jsfiles %}{% endblock jsfiles %}

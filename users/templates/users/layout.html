@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/bytewalk/profilepage.css">
+    <link rel="stylesheet" type="text/css" href="https://storage.googleapis.com/bytewalk/styles.css">
+    {% block cssfiles %}{% endblock cssfiles %}
+    <title>Recit</title>
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+	  <a class="navbar-brand ml-4 mr-4" href="#"><b>Recit</b></a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+	    <div class="navbar-nav">
+	      <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
+	      {% if user.is_authenticated %}
+	      	{% if user.is_developer %}
+	      	<a class="nav-item nav-link" href="{% url 'dev_my_profile' %}">Profile</a>
+	      	<a class="nav-item nav-link" href="{% url 'my_projects' %}">My Projects</a>
+	      	<a class="nav-item nav-link" href="{% url 'new_project' %}">Add Project</a>
+	      	<a class="nav-item nav-link" href="{% url 'my_skills' %}">My Skills</a>
+	      	<a class="nav-item nav-link" href="{% url 'search_rec' %}">Search Recruiters</a>
+	      	{% else %}
+	      	<a class="nav-item nav-link" href="{% url 'rec_my_profile' %}">My Profile</a>
+	      	<a class="nav-item nav-link" href="{% url 'skills_req' %}">Skill Requirements</a>
+	      	<a class="nav-item nav-link" href="{% url 'search_dev' %}">Search Developers</a>
+	      	{% endif %}
+	      	<a class="nav-item nav-link btn btn-danger ml-4  text-light" href="{% url 'logout' %}">Logout</a>
+	      {% else %}
+         	<a class="nav-item nav-link btn btn-success ml-4  text-light" href="{% url 'login' %}">Login</a>
+          	<a class="nav-item nav-link btn btn-info ml-3  text-light" href="{% url 'register' %} ">Register</a>
+          {% endif %}
+		</div>
+	  </div>
+	</nav>
+	<div class="container">
+	{% block content %}{% endblock content %}
+	</div>
+
+	<footer class="page-footer font-small black">
+	  <div class="footer-copyright text-center py-3">Recit © 2020
+	  <br><small class="text-muted">All rights reserved!</small>
+	</div>
+	</footer>
+
+	<!-- JS Files -->
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    {% block jsfiles %}{% endblock jsfiles %}
+</body>
+</html>

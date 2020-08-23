@@ -1,0 +1,27 @@
+{% extends "users/layout.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block cssfiles %}
+
+{% endblock cssfiles %}
+{% block content %}
+<br>
+<div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-9 col-lg-7 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title text-center"><b>Register</b></h5>
+            <form class="form-signin">
+            <div class="form-group">
+                <a class="btn btn-lg btn-info btn-block text-uppercase" href="{% url 'dev_register' %}">Register as a Developer</a><br><br>
+                <a class="btn btn-lg btn-warning btn-block text-uppercase" href="{% url 'rec_register' %}">Register as a Recruiter</a>
+            </div>
+        </form>
+    </div>
+    </div>
+    </div>
+    </div>
+</div>
+{% endblock content %}
+{% block jsfiles %}{% endblock jsfiles %}

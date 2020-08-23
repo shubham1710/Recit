@@ -1,0 +1,95 @@
+{% extends "users/layout.html" %}
+{% load static %}
+{% block cssfiles %}
+{% endblock cssfiles %}
+{% block content %}
+
+	<div class="main-content">
+    <div class="container mt-7">
+      <div class="row">
+        <div class="col-xl-8 m-auto order-xl-2 mb-5 mb-xl-0">
+          <div class="card card-profile shadow">
+            <div class="row justify-content-center">
+              <div class="col-lg-3 order-lg-2">
+                <div class="card-profile-image">
+                  <a href="{{ u.developer.image.url }}">
+                    <img src="{{ u.developer.image.url }}" class="rounded-circle" width="160px" height="160px">
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+  
+            </div>
+            <div class="card-body pt-0 pt-md-4">
+              <div class="row">
+                <div class="col">
+                  <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                    <div>
+                      <span class="heading">{{ projects.count }}</span>
+                      <span class="description"><a href="{% url 'dev_projects' u.username %}">Projects</a></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center">
+                <h3>
+                  {% if u.developer.full_name %}
+                    {{ u.developer.full_name }}
+                  {% else %}
+                    {{ u }}
+                  {% endif %}
+              </h3> 
+                <p class="text-dark">{{ u.developer.institute }}, {{ u.developer.country.name }}</p>
+                <p class="text-dark">{{u.developer.user.email}}</p>
+                <hr class="my-2">
+                {% if request.user == u %}
+                <a class="btn btn-info" href="{% url 'dev_edit_profile' %}">Edit Profile</a>
+                {% endif %}
+                <a class="btn btn-success" href="mailto:{{ u.developer.user.email }}">Contact</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card card-signin my-5">
+            <div class="card-body">
+                <h2>Skills ({{ skills.count }})</h2>
+                <hr class="my-2">
+                {% for skill in skills %}
+                  {% if request.user.is_recruiter %}
+                    {% if skill.skill_name in req_skills %}
+                    <li style="color: green"><b>{{ skill.skill_name }}</b></li>
+                    {% else %}
+                    <li>{{ skill.skill_name }}</li>
+                    {% endif %}
+                  {% else %}
+                  <li>{{ skill.skill_name }}</li>
+                  {% endif %}
+                {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="card card-signin my-5">
+            <div class="card-body">
+              <h2>Projects ({{ projects.count }})</h2>
+              <hr class="my-2">
+              {% for project in projects %}
+                  <h3><a href="{% url 'project-detail' project.id %}"><u>{{ project.title }}</u></a></h3>
+                  <p class="text-dark">{{ project.description|truncatewords:25 }}</p>
+                  <hr class="my-4">
+                {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% if request.user.is_recruiter %}
+       <small>* Skills matched are shown in green.</small>
+       {% endif %}
+    </div>
+  </div>
+{% endblock content %}
+{% block jsfiles %}{% endblock jsfiles %}
